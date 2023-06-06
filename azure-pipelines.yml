@@ -12,3 +12,8 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'init'
+    allowTelemetryCollection: true
