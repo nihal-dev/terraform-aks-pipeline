@@ -9,11 +9,22 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- task: TerraformCLI@0
-  inputs:
-    command: 'init'
-    allowTelemetryCollection: true
+stages:
+- stage: validateTerraform
+  displayName: Validating Terraform code
+  jobs:
+  - job: 
+    steps:
+    - task: TerraformCLI@0
+      inputs:
+        command: 'init'
+        backendType: 'azurerm'
+        backendServiceArm: 'Azure-AKS-connection'
+        backendAzureRmSubscriptionId: '58f627af-5f2f-4f24-b8b3-67712c182a5c'
+        ensureBackend: true
+        backendAzureRmResourceGroupName: 'Nihal-Training'
+        backendAzureRmResourceGroupLocation: 'Australia East'
+        backendAzureRmStorageAccountName: 'nihalstorageaccounts'
+        backendAzureRmContainerName: 'terraformremotestate'
+        allowTelemetryCollection: true
